@@ -10,27 +10,32 @@
 //=================================================================
 
 
-const { get } = require('./config');
+// Canal showcase para publicar setups.
+// Valida imágenes y redirige replies a hilos.
+
+const { get } = require('../config');
 
 module.exports = async (message) => {
   if (message.author.bot) return;
   if (!message.guild) return;
 
+  // Ignorar si no hay canal showcase configurado
   const showcaseChannel = await get('showcase_channel');
   if (!showcaseChannel) return;
-
   if (message.channel.id !== showcaseChannel) return;
 
-  // Si es una reply a un mensaje en el showcase
+
+  // Replies: redirigir a hilos
   if (message.reference) {
     const reply = await message.reply('💬 Para comentar esta publicación, crea un hilo en el mensaje original. Esto mantiene el canal ordenado.');
     setTimeout(() => {
       reply.delete().catch(console.error);
     }, 5000);
-    return message.delete();
+    return message.delete().catch(() => {});
   }
 
-  // Validar imagen para posts nuevos
+
+  // Posts nuevos: validar que tengan al menos una imagen
   const tieneImagen = message.attachments.some(att =>
     att.contentType?.startsWith('image/')
   );
@@ -38,15 +43,14 @@ module.exports = async (message) => {
   const tieneEmbedImagen = message.embeds.some(e => e.image);
 
   if (!tieneImagen && !tieneEmbedImagen) {
-    const reply = await message.reply('⚠️ Solo se permiten imágenes en este canal.');
+    const reply = await message.reply('⚠️ Para realizar una publicación en este canal, debes incluir al menos una imagen. Si deseas comentar o agregar contenido, crea un hilo en el mensaje original. Esto mantiene el canal ordenado.');
     setTimeout(() => {
       reply.delete().catch(console.error);
     }, 5000);
-    return message.delete();
+    return message.delete().catch(() => {});
   }
 
-  // No crear hilo automáticamente, solo permitir replies para crear hilos
-  // Agregar reacción de corazón para likes
+  // Reaccionar con corazón a posts válidos
   try {
     await message.react('❤️');
   } catch (err) {

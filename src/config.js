@@ -10,9 +10,23 @@
 //=================================================================
 
 
+// Configuración persistente (clave-valor).
+// Lee y escribe en SQLite con cache en memoria.
+
 const db = require('./db');
 
+// Cache en memoria para evitar lecturas repetitivas a la DB
+const cache = new Map();
+
+
+//  .-------------------------.
+//  | .---------------------. |
+//  | |   Guardar (set)     | |
+//  | `---------------------' |
+//  `-------------------------'
+
 function set(key, value) {
+  cache.set(key, value);
   return new Promise((resolve, reject) => {
     db.run(
       `INSERT INTO config (key, value)
@@ -24,14 +38,25 @@ function set(key, value) {
   });
 }
 
+
+//  .-------------------------.
+//  | .---------------------. |
+//  | |   Obtener (get)     | |
+//  | `---------------------' |
+//  `-------------------------'
+
 function get(key) {
+  if (cache.has(key)) return Promise.resolve(cache.get(key));
   return new Promise((resolve, reject) => {
     db.get(
       `SELECT value FROM config WHERE key = ?`,
       [key],
       (err, row) => {
         if (err) reject(err);
-        else resolve(row?.value || null);
+        else {
+          cache.set(key, row?.value || null);
+          resolve(row?.value || null);
+        }
       }
     );
   });

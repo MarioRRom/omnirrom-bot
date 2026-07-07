@@ -10,9 +10,13 @@
 //=================================================================
 
 
-const { SlashCommandBuilder, ChannelType } = require('discord.js');
+// Comando /setshowcase.
+// Configura el canal donde se publican los setups.
+
+const { SlashCommandBuilder, ChannelType, PermissionsBitField } = require('discord.js');
 const { set } = require('../config');
 
+// Definición del comando
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('setshowcase')
@@ -22,8 +26,10 @@ module.exports = {
         .setDescription('Canal donde se enviarán los setups')
         .addChannelTypes(ChannelType.GuildText)
         .setRequired(true)
-    ),
+    )
+    .setDefaultMemberPermissions(PermissionsBitField.Flags.Administrator),
 
+  // Ejecución
   execute: async (interaction) => {
     await interaction.deferReply();
     const channel = interaction.options.getChannel('canal');

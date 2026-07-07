@@ -63,12 +63,19 @@ Ejecutar el bot en modo desarrollo (se recarga automáticamente al guardar cambi
 npm run dev
 ```
 
+Después de agregar o modificar comandos, registrarlos en el servidor:
+
+```bash
+node deploy-commands.js
+```
+
 ## 📂 Estructura básica
 
 - `index.js` — arranca el bot y maneja los eventos principales.
 - `deploy-commands.js` — registra los comandos en el servidor.
+- `src/` — archivos generales e importantes para todo el bot (db, config, etc.).
 - `src/commands/` — comandos slash del bot.
-- `src/showcase.js` — lógica extra de manejo de mensajes.
+- `src/services/` — handlers de funcionalidades específicas (showcase, honeypot, etc.).
 - `src/db.js` — base de datos SQLite.
 
 ## 💬 Contribuir

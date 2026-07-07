@@ -17,7 +17,7 @@ const path = require('path');
 
 const commands = [];
 
-// Cargar comandos desde src/commands
+// Recorrer src/commands y recolectar datos de todos los comandos
 const commandsPath = path.join(__dirname, 'src', 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
