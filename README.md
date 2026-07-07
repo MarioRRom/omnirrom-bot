@@ -22,15 +22,34 @@ Actualmente está en una fase inicial (`alpha`), por lo que todavía puede estar
 - Integración con una base de datos SQLite para guardar configuraciones y datos.
 - Recarga automática en desarrollo con `nodemon`.
 
-## ⚙️ Instalación
+
+## 🐳 Docker
+
+```bash
+docker compose up -d
+```
+
+Actualizar a nueva versión:
+
+```bash
+git pull
+docker compose up -d --build
+```
+
+### Portainer
+
+1. Stacks → Add stack
+2. Repositorio: `https://github.com/MarioRRom/omnirrom-bot`
+3. En **Environment variables** del stack, reemplazar `poner-token-aqui`, `poner-client-id-aqui` y `poner-guild-id-aqui` con los valores reales
+4. Deploy
+
+## 💻 Desarrollo local
 
 ```bash
 npm install
 ```
 
-## 🛠️ Configuración
-
-Crea un archivo `.env` en la raíz con al menos estas variables:
+Crear un archivo `.env` en la raíz con las variables necesarias:
 
 ```env
 TOKEN=tu_token_de_discord
@@ -38,15 +57,7 @@ CLIENT_ID=tu_client_id
 GUILD_ID=tu_guild_id
 ```
 
-## ▶️ Uso
-
-Ejecutar el bot en producción:
-
-```bash
-npm start
-```
-
-Ejecutar el bot en modo desarrollo (reinicia al guardar cambios):
+Ejecutar el bot en modo desarrollo (se recarga automáticamente al guardar cambios con `nodemon`):
 
 ```bash
 npm run dev

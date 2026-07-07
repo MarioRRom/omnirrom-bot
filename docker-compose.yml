@@ -1,0 +1,11 @@
+services:
+  bot:
+    build: .
+    container_name: omnirrom-bot
+    restart: unless-stopped
+    environment:
+      - TOKEN=poner-token-aqui
+      - CLIENT_ID=poner-client-id-aqui
+      - GUILD_ID=poner-guild-id-aqui
+    volumes:
+      - ./data:/app/data
