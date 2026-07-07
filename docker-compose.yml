@@ -9,4 +9,4 @@ services:
       - CLIENT_ID=${CLIENT_ID}
       - GUILD_ID=${GUILD_ID}
     volumes:
-      - /ruta-a-tus-datos:/app/data
+      - ${DATA_PATH}:/app/data

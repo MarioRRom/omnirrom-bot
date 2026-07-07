@@ -40,7 +40,7 @@ docker compose up -d --build
 
 1. Stacks → Add stack
 2. Repositorio: `https://github.com/MarioRRom/omnirrom-bot`
-3. En la sección **Environment variables** del stack, agregar `TOKEN`, `CLIENT_ID` y `GUILD_ID` con sus valores reales. El compose las resuelve automáticamente.
+3. En la sección **Environment variables** del stack, agregar `TOKEN`, `CLIENT_ID`, `GUILD_ID` y `DATA_PATH` (ruta donde guardar los archivos persistentes, ej: `/home/usuario/omnirrom-data`).
 4. Deploy
 
 ## 💻 Desarrollo local
